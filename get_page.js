@@ -4,9 +4,10 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
-(async () => {
+async function getHTML(url) {
+    let returnVal = null;
     const browser = await puppeteer.launch({
-        headless: false, // Try non-headless for less detection
+        headless: false,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -17,13 +18,30 @@ puppeteer.use(StealthPlugin());
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
 
     try {
-        const response = await page.goto('https://www.flexjobs.com/remote-jobs/bilingual', { waitUntil: 'domcontentloaded' });
-        console.log('Request status: ', response?.status());
+        const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+        const status = response?.status();
 
-        const html = await page.content();
-        fs.writeFileSync('testPage.html', html);
+        if (status == 200) {
+            const html = await page.content();
+
+            fs.writeFileSync("testPage.html", html); //optionally write the html to a file
+
+            returnVal = [1, html];
+        } else {
+            returnVal = [0, "Fail! Request status: " + status];
+        }
+
     } catch (err) {
-        console.log('Failed to load:', err)
+        returnVal = [0, `Failed to load: ${err}`];
     }
-    await browser.close()
-})()
+    await browser.close();
+
+    return returnVal;
+}
+
+//Usage
+(async () => {
+    const url = 'https://weworkremotely.com/listings/silverfin-team-lead-product-engineering-team-2';
+    const result = await getHTML(url);
+    //console.log(result[0] ? 'Success getting ' + url : 'Error:', result[1]);
+})();
