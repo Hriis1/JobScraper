@@ -4,7 +4,7 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
-async function getHTML(url) {
+async function getPageHTML(url) {
     let returnVal = null;
     const browser = await puppeteer.launch({
         headless: false,
@@ -39,9 +39,4 @@ async function getHTML(url) {
     return returnVal;
 }
 
-//Usage
-(async () => {
-    const url = 'https://weworkremotely.com/listings/silverfin-team-lead-product-engineering-team-2';
-    const result = await getHTML(url);
-    //console.log(result[0] ? 'Success getting ' + url : 'Error:', result[1]);
-})();
+module.exports = { getPageHTML };
