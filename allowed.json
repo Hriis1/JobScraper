@@ -2,7 +2,9 @@
     {
         "site": "Flex Jobs",
         "host": "flexjobs.com/",
-        "board_selectors": {}
+        "board_selectors": {
+            "link_selector": "test"
+        }
     },
     {
         "site": "We Work Remotely",
@@ -14,6 +16,8 @@
     {
         "site": "Empollo",
         "host": "empllo.com/",
-        "board_selectors": {}
+        "board_selectors": {
+            "link_selector": "test"
+        }
     }
 ]

@@ -7,7 +7,7 @@ puppeteer.use(StealthPlugin());
 async function getPageHTML(url) {
     let returnVal = null;
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: "new",
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
@@ -22,9 +22,9 @@ async function getPageHTML(url) {
         const status = response?.status();
 
         if (status == 200) {
-            const html = await page.content();
-
-            fs.writeFileSync("testPage.html", html); //optionally write the html to a file
+            //optionally write the html to a file
+            /* const html = await page.content();
+            fs.writeFileSync("testPage.html", html); */
 
             returnVal = [1, page, browser];
         } else {

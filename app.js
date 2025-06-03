@@ -16,7 +16,7 @@ function getURLData(inputUrl) {
 
 
 (async () => {
-    const url = 'https://weworkremotely.com/categories/remote-sales-and-marketing-jobs';
+    const url = 'https://weworkremotely.com/';
     const urlData = getURLData(url);
 
     if (!urlData) {
