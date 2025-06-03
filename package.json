@@ -1,0 +1,20 @@
+{
+  "name": "jobscrapernodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hriis1/JobScraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hriis1/JobScraper/issues"
+  },
+  "homepage": "https://github.com/Hriis1/JobScraper#readme",
+  "description": ""
+}
