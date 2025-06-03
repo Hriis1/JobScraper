@@ -89,8 +89,9 @@ function get_remote_data($url, $post_paramtrs = false, $curl_opts = [])
 }
 
 
-$customLink = 'https://www.flexjobs.com/remote-jobs/bilingual?page=2';
-echo "Contents of: " . $customLink . "<br>";
-echo get_remote_data($customLink);   //SIMPLE REQUEST;
+$customLink = 'https://empllo.com/category/remote-engineering-jobs';
+//echo "Contents of: " . $customLink . "<br>";
+$siteHTML = get_remote_data($customLink);   //SIMPLE REQUEST;
+echo '<pre>' . htmlspecialchars($siteHTML) . '</pre>';
 
 
