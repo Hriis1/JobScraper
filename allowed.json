@@ -2,14 +2,14 @@
     {
         "site": "Flex Jobs",
         "host": "flexjobs.com/",
-        "board_selectors": {
-            
-        }
+        "board_selectors": {}
     },
     {
         "site": "We Work Remotely",
         "host": "weworkremotely.com/",
-        "board_selectors": {}
+        "board_selectors": {
+            "link_selector": "li.new-listing-container > a[href^='/listings/']"
+        }
     },
     {
         "site": "Empollo",

@@ -26,15 +26,16 @@ async function getPageHTML(url) {
 
             fs.writeFileSync("testPage.html", html); //optionally write the html to a file
 
-            returnVal = [1, html];
+            returnVal = [1, page, browser];
         } else {
             returnVal = [0, "Fail! Request status: " + status];
+            await browser.close();
         }
 
     } catch (err) {
         returnVal = [0, `Failed to load: ${err}`];
+        await browser.close();
     }
-    await browser.close();
 
     return returnVal;
 }
