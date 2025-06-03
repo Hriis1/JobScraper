@@ -16,5 +16,10 @@
     "url": "https://github.com/Hriis1/JobScraper/issues"
   },
   "homepage": "https://github.com/Hriis1/JobScraper#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "puppeteer": "^24.10.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
 }
