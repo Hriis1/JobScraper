@@ -1,8 +1,19 @@
 [
     {
-        "base_url": "https://empllo.com/"
+        "site": "Flex Jobs",
+        "host": "flexjobs.com/",
+        "board_selectors": {
+            
+        }
     },
     {
-        "base_url": "https://flexjobs.com/"
+        "site": "We Work Remotely",
+        "host": "weworkremotely.com/",
+        "board_selectors": {}
+    },
+    {
+        "site": "Empollo",
+        "host": "empllo.com/",
+        "board_selectors": {}
     }
 ]
