@@ -9,7 +9,7 @@ const he = require('he');
 //Custom
 const { getPageHTML } = require('./getPageHTML.js');
 
-async function extractJobData(page, browser, jobLinks) {
+async function extractJobsData(page, browser, jobLinks) {
 
     //Return data structure
     let returnData = {
@@ -17,7 +17,7 @@ async function extractJobData(page, browser, jobLinks) {
         error: []
     };
 
-    const maxLen = Math.min(5, jobLinks.length);
+    const maxLen = Math.min(1, jobLinks.length);
 
 
     for (let i = 0; i < maxLen; i++) {
@@ -39,8 +39,11 @@ async function extractJobData(page, browser, jobLinks) {
             'script[type="application/ld+json"]',
             scripts => {
                 for (const script of scripts) {
+                    let text = script.textContent;
+                    // Remove unescaped control characters
+                    text = text.replace(/[\u0000-\u001F]+/g, ' ');
                     try {
-                        const json = JSON.parse(script.textContent);
+                        const json = JSON.parse(text);
                         if ((json['@type'] === 'JobPosting') || (Array.isArray(json['@type']) && json['@type'].includes('JobPosting'))) {
                             return {
                                 title: json.title || "",
@@ -53,7 +56,7 @@ async function extractJobData(page, browser, jobLinks) {
                                 // add other fields as needed
                             };
                         }
-                    } catch (e) { }
+                    } catch (e) { return { error: e.message }; }
                 }
                 return null;
             }
@@ -62,12 +65,14 @@ async function extractJobData(page, browser, jobLinks) {
         //if there was application/ld+json - "@type" : "JobPosting"
         if (jobPostingData) {
             //Decode needed fields to html
-            jobPostingData.title = he.decode(jobPostingData.title || "");
-            jobPostingData.description = he.decode(jobPostingData.description || "");
+            jobPostingData.title = he.decode(he.decode(jobPostingData.title) || "");
+            jobPostingData.description = he.decode(he.decode(jobPostingData.description) || "");
 
             //Push to final data
             returnData.jobs_data.push(jobPostingData);
             continue;
+        } else {
+            returnData.error.push(`No JobPosting for ${link}`);
         }
 
         //No application/ld+json - "@type" : "JobPosting"
@@ -77,4 +82,4 @@ async function extractJobData(page, browser, jobLinks) {
     return returnData;
 }
 
-module.exports = { extractJobData };
+module.exports = { extractJobsData };

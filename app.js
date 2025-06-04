@@ -8,6 +8,7 @@ const fs = require('fs');
 
 //Custom
 const { getPageHTML } = require('./getPageHTML.js');
+const { extractJobsData } = require('./extractJobsData.js');
 
 const allowed = JSON.parse(fs.readFileSync('./allowed.json', 'utf8')); //json data about the allowed urls
 
@@ -21,6 +22,7 @@ function getURLData(inputUrl) {
 
     return found || false;
 }
+
 
 
 (async () => {
@@ -65,7 +67,9 @@ function getURLData(inputUrl) {
         urlData.board_selectors.link_selector,
         links => links.map(link => link.href)
     );
-    console.log(jobLinks);
+
+    const jobsData = await extractJobsData(page, browser, jobLinks);
+    console.log(jobsData);
 
     // Done with Puppeteer, close browser!
     await browser.close();
