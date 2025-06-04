@@ -23,9 +23,17 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
         error: []
     };
 
+    //check if page selectors are present
+    const hasPageSelectors = !!(urlData.page_selectors && Object.keys(urlData.page_selectors).length);
+
+    //Break after this many tries if there is no application/ld+json - "@type" : "JobPosting" and no page selectors and job_data is empty
+    const baseBreakCounter = 3;
+    let breakCounter = baseBreakCounter;
+
+    //Set max num of jobs to take
     const maxLen = Math.min(100, jobLinks.length);
 
-
+    //Take info for each job
     for (let i = 0; i < maxLen; i++) {
         const link = jobLinks[i];
 
@@ -75,6 +83,9 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
 
         //if there was application/ld+json - "@type" : "JobPosting"
         if (jobPostingData) {
+            //Reset break counter
+            breakCounter = baseBreakCounter;
+
             //Decode needed fields to html
             jobPostingData.title = he.decode(he.decode(jobPostingData.title) || "");
             jobPostingData.description = he.decode(he.decode(jobPostingData.description) || "");
@@ -86,7 +97,25 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
         }
 
         //No application/ld+json - "@type" : "JobPosting"
-        returnData.error.push(`No JobPosting for ${link}`);
+        //returnData.error.push(`No JobPosting for ${link}`);
+
+        //if page selectors are there
+        if (hasPageSelectors) {
+
+            //TODO
+
+        } else { //if page selectors arent there
+            returnData.error.push(`No page selectors or JobPosting data for ${link}`);
+
+            //If no job was yet taken
+            if (returnData.jobs_data.length == 0) {
+                //if break counter reaches 0 break
+                if (--breakCounter == 0) {
+                    returnData.error.push(`No selectors or JobPosting data for over all`);
+                    break;
+                }
+            }
+        }
 
     }
 

@@ -41,7 +41,7 @@ function getAvailableFileName(baseName, dir) {
 
 (async () => {
     //URL and its data from allowed.json
-    const url = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs';
+    const url = 'https://www.flexjobs.com/remote-jobs/bilingual';
     const urlData = getURLData(url);
 
     //if url not in allowed.json or there is no link_selector
