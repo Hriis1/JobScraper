@@ -57,6 +57,10 @@ async function extractJobsData(page, browser, jobLinks) {
                                 employmentType: json.employmentType || "",
                                 hiringOrganization: (json.hiringOrganization && json.hiringOrganization.name) || "",
                                 location: json.jobLocationType || "",
+                                minSalary: (json.baseSalary && json.baseSalary.value && json.baseSalary.value.minValue) ? json.baseSalary.value.minValue.toString() : "",
+                                maxSalary: (json.baseSalary && json.baseSalary.value && json.baseSalary.value.maxValue) ? json.baseSalary.value.maxValue.toString() : "",
+                                currency: (json.baseSalary && json.baseSalary.currency) ? json.baseSalary.currency : "",
+                                unitText: (json.baseSalary && json.baseSalary.value && json.baseSalary.value.unitText) ? json.baseSalary.value.unitText : "",
                                 // add other fields as needed
                             };
                         }
