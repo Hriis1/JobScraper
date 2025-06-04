@@ -6,15 +6,17 @@ puppeteer.use(StealthPlugin());
 //File stream
 const fs = require('fs');
 
-async function getPageHTML(page, browser, url) {
+async function getPageHTML(page, browser, url, save = false) {
     try {
         const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
         const status = response?.status();
 
         if (status == 200) {
-            //optionally write the html to a file
-            /* const html = await page.content();
-            fs.writeFileSync("testPage.html", html); */
+
+            if (save) { //optionally write the html to a file
+                const html = await page.content();
+                fs.writeFileSync("testPage.html", html);
+            }
 
             return [1, ""];
         } else {

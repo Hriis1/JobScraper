@@ -10,6 +10,7 @@ const path = require('path');
 //Custom
 const { getPageHTML } = require('./getPageHTML.js');
 const { extractJobsData } = require('./extractJobsData.js');
+const { count } = require('console');
 
 const allowed = JSON.parse(fs.readFileSync('./allowed.json', 'utf8')); //json data about the allowed urls
 
@@ -40,7 +41,7 @@ function getAvailableFileName(baseName, dir) {
 
 (async () => {
     //URL and its data from allowed.json
-    const url = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs';
+    const url = 'https://www.flexjobs.com/remote-jobs/bilingual';
     const urlData = getURLData(url);
 
     //if url not in allowed.json or there is no link_selector
@@ -80,6 +81,14 @@ function getAvailableFileName(baseName, dir) {
         urlData.board_selectors.link_selector,
         links => links.map(link => link.href)
     );
+
+    /* console.log(await page.content()); */
+    console.log(jobLinks.length);
+    console.log(jobLinks);
+
+    await browser.close();
+    return;
+
 
     const jobsData = await extractJobsData(page, browser, jobLinks);
 

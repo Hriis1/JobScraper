@@ -12,7 +12,7 @@ const he = require('he');
 //Custom
 const { getPageHTML } = require('./getPageHTML.js');
 
-async function extractJobsData(page, browser, jobLinks) {
+async function extractJobsData(page, browser, jobLinks, urlData) {
 
     //Return data structure
     let returnData = {

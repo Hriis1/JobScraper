@@ -3,7 +3,17 @@
         "site": "Flex Jobs",
         "host": "flexjobs.com/",
         "board_selectors": {
-            "link_selector": "test"
+            "link_selector": ".sc-jv5lm6-16 a[href^='/publicjobs/']"
+        },
+        "page_selectors": {
+            "title_selector": ".sc-1ok425a-5",
+            "description_selector": ".sc-fihdu9-1",
+            "date_posted_selector": "ul.sc-fihdu9-0 li:has(> h5#date-posted) p",
+            "valid_through_selector": "",
+            "employment_type_selector": "ul.sc-fihdu9-0 li:nth-child(4) p",
+            "hiring_organization_selector": "",
+            "location_selector": "ul.sc-fihdu9-0 li:nth-child(3) .sc-fihdu9-13",
+            "salary_selector": ""
         }
     },
     {
@@ -11,13 +21,33 @@
         "host": "weworkremotely.com/",
         "board_selectors": {
             "link_selector": "li.new-listing-container > a[href^='/listings/']"
+        },
+        "page_selectors": {
+            "title_selector": ".lis-container__header__hero__company-info__title",
+            "description_selector": ".lis-container__job__content__description",
+            "date_posted_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Posted on') span",
+            "valid_through_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Apply before') span",
+            "employment_type_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Job type') span, li.lis-container__job__sidebar__job-about__list__item:has-text('Job type') .box--jobType",
+            "hiring_organization_selector": ".lis-container__job__sidebar__companyDetails__info__title h3",
+            "location_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Region') .box--region",
+            "salary_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Salary') .box--blue"
         }
     },
     {
         "site": "Empollo",
         "host": "empllo.com/",
         "board_selectors": {
-            "link_selector": "test"
+            "link_selector": ""
+        },
+        "page_selectors": {
+            "title_selector": "",
+            "description_selector": "",
+            "date_posted_selector": "",
+            "valid_through_selector": "",
+            "employment_type_selector": "",
+            "hiring_organization_selector": "",
+            "location_selector": "",
+            "salary_selector": ""
         }
     }
 ]
