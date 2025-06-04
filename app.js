@@ -1,9 +1,13 @@
-const { getPageHTML } = require('./getPageHTML.js');
-const fs = require('fs');
-
+//Puppeteer
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
+
+//File stream
+const fs = require('fs');
+
+//Custom
+const { getPageHTML } = require('./getPageHTML.js');
 
 const allowed = JSON.parse(fs.readFileSync('./allowed.json', 'utf8')); //json data about the allowed urls
 

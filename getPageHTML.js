@@ -1,8 +1,10 @@
+//Puppeteer
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const fs = require('fs');
-
 puppeteer.use(StealthPlugin());
+
+//File stream
+const fs = require('fs');
 
 async function getPageHTML(page, browser, url) {
     try {
@@ -16,11 +18,11 @@ async function getPageHTML(page, browser, url) {
 
             return [1, ""];
         } else {
-            return [0, "Fail! Request status: " + status];
+            return [0, `Fail for ${url}! Request status: ${status}`];
         }
 
     } catch (err) {
-        return returnVal = [0, `Failed to load: ${err}`];
+        return returnVal = [0, `Failed to load ${url}: ${err}`];
     }
 }
 
