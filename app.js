@@ -5,6 +5,7 @@ puppeteer.use(StealthPlugin());
 
 //File stream
 const fs = require('fs');
+const path = require('path');
 
 //Custom
 const { getPageHTML } = require('./getPageHTML.js');
@@ -22,6 +23,18 @@ function getURLData(inputUrl) {
 
     return found || false;
 }
+
+function getAvailableFileName(baseName, dir) {
+    baseName = baseName.replace(/[^\w\-]+/g, '_'); //non letter or numbers with _
+    let idx = 1;
+    let fileName;
+    do {
+        fileName = `${baseName}_data_${idx}.json`;
+        idx++;
+    } while (fs.existsSync(path.join(dir, fileName)));
+    return path.join(dir, fileName);
+}
+
 
 
 
@@ -69,7 +82,12 @@ function getURLData(inputUrl) {
     );
 
     const jobsData = await extractJobsData(page, browser, jobLinks);
-    console.log(jobsData);
+
+    //Save to a file
+    const jobsDir = path.join(__dirname, 'jobs_data');
+    const filePath = getAvailableFileName(urlData.site, jobsDir);
+    fs.writeFileSync(filePath, JSON.stringify(jobsData, null, 2), 'utf8');
+    console.log(`Job data for ${url} saved`, filePath);
 
     // Done with Puppeteer, close browser!
     await browser.close();

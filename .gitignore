@@ -1,6 +1,9 @@
 vendor/
 .env
 
+#Scrapped data
+jobs_data/
+
 # Node.js
 node_modules/
 npm-debug.log

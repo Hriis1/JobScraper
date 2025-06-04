@@ -3,6 +3,9 @@ const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 
+//File stream
+const fs = require('fs');
+
 //Decode html
 const he = require('he');
 
@@ -13,11 +16,12 @@ async function extractJobsData(page, browser, jobLinks) {
 
     //Return data structure
     let returnData = {
+        total: 0,
         jobs_data: [],
         error: []
     };
 
-    const maxLen = Math.min(1, jobLinks.length);
+    const maxLen = Math.min(100, jobLinks.length);
 
 
     for (let i = 0; i < maxLen; i++) {
@@ -69,11 +73,11 @@ async function extractJobsData(page, browser, jobLinks) {
             jobPostingData.description = he.decode(he.decode(jobPostingData.description) || "");
 
             //Push to final data
+            returnData.total++;
             returnData.jobs_data.push(jobPostingData);
             continue;
-        } else {
-            returnData.error.push(`No JobPosting for ${link}`);
         }
+        returnData.error.push(`No JobPosting for ${link}`);
 
         //No application/ld+json - "@type" : "JobPosting"
 
