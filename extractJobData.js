@@ -17,8 +17,10 @@ async function extractJobData(page, browser, jobLinks) {
         error: []
     };
 
+    const maxLen = Math.min(5, jobLinks.length);
 
-    for (let i = 0; i < jobLinks.length; i++) {
+
+    for (let i = 0; i < maxLen; i++) {
         const link = jobLinks[i];
 
         //Get the contents of the curr job page
@@ -26,7 +28,7 @@ async function extractJobData(page, browser, jobLinks) {
 
         //error
         if (result[0] == 0) {
-            returnData["error"].push(result[1]);
+            returnData.error.push(result[1]);
             continue;
         }
 
@@ -41,8 +43,8 @@ async function extractJobData(page, browser, jobLinks) {
                         const json = JSON.parse(script.textContent);
                         if ((json['@type'] === 'JobPosting') || (Array.isArray(json['@type']) && json['@type'].includes('JobPosting'))) {
                             return {
-                                title: he.decode(json.title || ""),
-                                description: he.decode(json.description || ""),
+                                title: json.title || "",
+                                description: json.description || "",
                                 datePosted: json.datePosted || "",
                                 validThrough: json.validThrough || "",
                                 employmentType: json.employmentType || "",
@@ -59,6 +61,11 @@ async function extractJobData(page, browser, jobLinks) {
 
         //if there was application/ld+json - "@type" : "JobPosting"
         if (jobPostingData) {
+            //Decode needed fields to html
+            jobPostingData.title = he.decode(jobPostingData.title || "");
+            jobPostingData.description = he.decode(jobPostingData.description || "");
+
+            //Push to final data
             returnData.jobs_data.push(jobPostingData);
             continue;
         }
