@@ -83,14 +83,15 @@ function getAvailableFileName(baseName, dir) {
     );
 
     /* console.log(await page.content()); */
-    console.log(jobLinks.length);
+    /* console.log(jobLinks.length);
     console.log(jobLinks);
 
     await browser.close();
-    return;
+    return; */
 
 
-    const jobsData = await extractJobsData(page, browser, jobLinks);
+    let jobsData = await extractJobsData(page, browser, jobLinks);
+    jobsData.link_given = url;
 
     //Save to a file
     const jobsDir = path.join(__dirname, 'jobs_data');

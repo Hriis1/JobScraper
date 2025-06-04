@@ -21,16 +21,6 @@
         "host": "weworkremotely.com/",
         "board_selectors": {
             "link_selector": "li.new-listing-container > a[href^='/listings/']"
-        },
-        "page_selectors": {
-            "title_selector": ".lis-container__header__hero__company-info__title",
-            "description_selector": ".lis-container__job__content__description",
-            "date_posted_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Posted on') span",
-            "valid_through_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Apply before') span",
-            "employment_type_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Job type') span, li.lis-container__job__sidebar__job-about__list__item:has-text('Job type') .box--jobType",
-            "hiring_organization_selector": ".lis-container__job__sidebar__companyDetails__info__title h3",
-            "location_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Region') .box--region",
-            "salary_selector": "li.lis-container__job__sidebar__job-about__list__item:has-text('Salary') .box--blue"
         }
     },
     {

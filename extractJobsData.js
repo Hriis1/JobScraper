@@ -16,6 +16,8 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
 
     //Return data structure
     let returnData = {
+        site: urlData.site,
+        link_given: "",
         total: 0,
         jobs_data: [],
         error: []
@@ -81,9 +83,9 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
             returnData.jobs_data.push(jobPostingData);
             continue;
         }
-        returnData.error.push(`No JobPosting for ${link}`);
 
         //No application/ld+json - "@type" : "JobPosting"
+        returnData.error.push(`No JobPosting for ${link}`);
 
     }
 
