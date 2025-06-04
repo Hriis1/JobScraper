@@ -59,6 +59,7 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
                                 employmentType: json.employmentType || "",
                                 hiringOrganization: (json.hiringOrganization && json.hiringOrganization.name) || "",
                                 location: json.jobLocationType || "",
+                                category: json.occupationalCategory || "",
                                 minSalary: (json.baseSalary && json.baseSalary.value && json.baseSalary.value.minValue) ? json.baseSalary.value.minValue.toString() : "",
                                 maxSalary: (json.baseSalary && json.baseSalary.value && json.baseSalary.value.maxValue) ? json.baseSalary.value.maxValue.toString() : "",
                                 currency: (json.baseSalary && json.baseSalary.currency) ? json.baseSalary.currency : "",

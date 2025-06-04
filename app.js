@@ -41,7 +41,7 @@ function getAvailableFileName(baseName, dir) {
 
 (async () => {
     //URL and its data from allowed.json
-    const url = 'https://weworkremotely.com/categories/remote-sales-and-marketing-jobs';
+    const url = 'https://weworkremotely.com/categories/remote-full-stack-programming-jobs';
     const urlData = getURLData(url);
 
     //if url not in allowed.json or there is no link_selector
@@ -90,7 +90,7 @@ function getAvailableFileName(baseName, dir) {
     return; */
 
 
-    let jobsData = await extractJobsData(page, browser, urlData);
+    let jobsData = await extractJobsData(page, browser, jobLinks, urlData);
     jobsData.link_given = url;
 
     //Save to a file
