@@ -6,15 +6,15 @@
             "link_selector": ".sc-jv5lm6-16 a[href^='/publicjobs/']"
         },
         "page_selectors": {
-            "title_selector": ".sc-1ok425a-5",
-            "description_selector": ".sc-fihdu9-1",
-            "date_posted_selector": "ul.sc-fihdu9-0 li:has(> h5#date-posted) p",
+            "title_selector": "#content h1",
+            "description_selector": "div#inset-wrapper [role='tabpanel'] > p",
+            "date_posted_selector": "div#inset-wrapper p.hFMoxy",
             "valid_through_selector": "",
-            "employment_type_selector": "ul.sc-fihdu9-0 li:nth-child(4) p",
-            "hiring_organization_selector": "",
-            "location_selector": "ul.sc-fihdu9-0 li:nth-child(3) .sc-fihdu9-13",
-            "category_selector": "ul.sc-fihdu9-0 li:nth-child(8) p",
-            "salary_selector": ""
+            "employment_type_selector": "ul#detail-list-wrapper > li:nth-of-type(4) > p",
+            "hiring_organization_selector": "ul#detail-list-wrapper > li:nth-of-type(3) > p",
+            "location_selector": "",
+            "category_selector": "ul#detail-list-wrapper > li:nth-of-type(9) > p",
+            "salary_selector": "ul#detail-list-wrapper > li:nth-of-type(2) > p"
         }
     },
     {

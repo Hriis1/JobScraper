@@ -91,6 +91,10 @@ function getAvailableFileName(baseName, dir) {
 
 
     let jobsData = await extractJobsData(page, browser, jobLinks, urlData);
+
+    /* console.log(jobsData);
+    return; */
+
     jobsData.link_given = url;
 
     //Save to a file
