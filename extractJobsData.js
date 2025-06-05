@@ -143,6 +143,11 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
                 }
             }
 
+            // helper to collapse multiple spaces into one, and trim ends
+            function normalize(text) {
+                return text.replace(/\s{2,}/g, ' ').trim();
+            }
+
             /* const html = await jobPage.content();
             console.log(html); */
 
@@ -160,6 +165,10 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
 
             // Salary
             manualJobData.salaryOverAll = await getText(selectors.salary_selector);
+            // If there are no digits anywhere in the string, clear it
+            if (!/\d/.test(manualJobData.salaryOverAll)) {
+                manualJobData.salaryOverAll = "";
+            }
 
             // Decode HTML entities
             manualJobData.title = he.decode(he.decode(manualJobData.title) || "");
@@ -171,6 +180,16 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
             manualJobData.location = he.decode(he.decode(manualJobData.location) || "");
             manualJobData.category = he.decode(he.decode(manualJobData.category) || "");
             manualJobData.salaryOverAll = he.decode(he.decode(manualJobData.salaryOverAll) || "");
+
+            //Removem multiple spaces
+            manualJobData.title = normalize(manualJobData.title);
+            manualJobData.datePosted = normalize(manualJobData.datePosted);
+            manualJobData.validThrough = normalize(manualJobData.validThrough);
+            manualJobData.employmentType = normalize(manualJobData.employmentType);
+            manualJobData.hiringOrganization = normalize(manualJobData.hiringOrganization);
+            manualJobData.location = normalize(manualJobData.location);
+            manualJobData.category = normalize(manualJobData.category);
+            manualJobData.salaryOverAll = normalize(manualJobData.salaryOverAll);
 
 
             // Push to return data if at least one main field is found (optional, you can skip this if you want everything)
