@@ -2,6 +2,8 @@
     {
         "site": "Flex Jobs",
         "host": "flexjobs.com/",
+        "pagination_param": "page",
+        "start_page": "1",
         "board_selectors": {
             "link_selector": ".sc-jv5lm6-16 a[href^='/publicjobs/']"
         },
@@ -20,6 +22,8 @@
     {
         "site": "We Work Remotely",
         "host": "weworkremotely.com/",
+        "pagination_param": "",
+        "start_page": "1",
         "board_selectors": {
             "link_selector": "li.new-listing-container > a[href^='/listings/']"
         }
@@ -27,8 +31,10 @@
     {
         "site": "Empollo",
         "host": "empllo.com/",
+        "pagination_param": "",
+        "start_page": "1",
         "board_selectors": {
-            "link_selector": ""
+            "link_selector": "a[data-turbo=\"false\"][href^=\"/jobs/view/\"]"
         },
         "page_selectors": {
             "title_selector": "",

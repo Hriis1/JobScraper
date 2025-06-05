@@ -41,7 +41,7 @@ function getAvailableFileName(baseName, dir) {
 
 (async () => {
     //URL and its data from allowed.json
-    const url = 'https://www.flexjobs.com/remote-jobs/bilingual';
+    const url = 'https://empllo.com/category/remote-sales-jobs';
     const urlData = getURLData(url);
 
     //if url not in allowed.json or there is no link_selector
@@ -66,21 +66,72 @@ function getAvailableFileName(baseName, dir) {
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
 
-    //Get the contents of the listings page
-    const result = await getPageHTML(page, browser, url);
+    //Get data about pagination
+    const pagination_param = urlData.pagination_param;
+    const start_page = parseInt(urlData.start_page);
+    let jobLinks = [];
 
-    if (result[0] == 0) { //fail
-        await browser.close();
-        console.log('Error:' + result[1]);
-        return;
+    if (pagination_param) { //if there is pagination
+        // How many pages max to crawl (e.g. from page=start_page up to page=start_page+MAX_PAGES)
+        const MAX_PAGES = 30;
+        let currentPage = start_page;
+        let pagesFetched = 0;
+
+        while (true) {
+            // If we've already fetched MAX_PAGES pages, stop.
+            if (pagesFetched >= MAX_PAGES) {
+                console.log(`Reached max_pages limit (${MAX_PAGES}). Stopping pagination.`);
+                break;
+            }
+
+            // Build the paginated URL (e.g. https://…?page=10, https://…?page=11, etc.)
+            const pagedUrl = `${url}?${pagination_param}=${currentPage}`;
+            //console.log(`Fetching page ${currentPage}: ${pagedUrl}`);
+
+            // Load the paged URL via your helper
+            const result = await getPageHTML(page, browser, pagedUrl);
+            if (result[0] === 0) {
+                // If getPageHTML failed, bail out entirely
+                console.log(`Error loading page ${url}?${pagination_param}=${currentPage}: ${result[1]}`);
+                continue;
+            }
+
+            // Extract all job‐link hrefs on this paged view
+            const linksOnPage = await page.$$eval(
+                urlData.board_selectors.link_selector,
+                anchors => anchors.map(a => a.href)
+            );
+
+            // If no links were found, we've likely run out of pages
+            if (!linksOnPage || linksOnPage.length === 0) {
+                break;
+            }
+
+            // Append all newly found links (without overwriting)  
+            jobLinks.push(...linksOnPage);
+
+            // Move on to the next page
+            currentPage += 1;
+            pagesFetched += 1;
+        }
+
+    } else { //if there is no pagination
+        //Get the contents of the listings page
+        const result = await getPageHTML(page, browser, url);
+
+        if (result[0] == 0) { //fail
+            await browser.close();
+            console.log('Error:' + result[1]);
+            return;
+        }
+
+        //Got the html successfully
+        // Extract job links
+        jobLinks = await page.$$eval(
+            urlData.board_selectors.link_selector,
+            links => links.map(link => link.href)
+        );
     }
-
-    //Got the html successfully
-    // Extract job links
-    const jobLinks = await page.$$eval(
-        urlData.board_selectors.link_selector,
-        links => links.map(link => link.href)
-    );
 
     /* console.log(await page.content()); */
     /* console.log(jobLinks.length);

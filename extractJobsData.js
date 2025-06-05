@@ -31,7 +31,7 @@ async function extractJobsData(page, browser, jobLinks, urlData) {
     let breakCounter = baseBreakCounter;
 
     //Set max num of jobs to take
-    const maxLen = Math.min(100, jobLinks.length);
+    const maxLen = Math.min(500, jobLinks.length);
 
     //Take info for each job
     for (let i = 0; i < maxLen; i++) {
