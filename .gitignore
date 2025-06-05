@@ -1,5 +1,6 @@
 vendor/
 .env
+*.rar
 
 #Scrapped data
 jobs_data/
